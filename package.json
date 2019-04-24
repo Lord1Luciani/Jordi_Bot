@@ -23,8 +23,11 @@
   "homepage": "https://github.com/Lord1Luciani/LyChessBot#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^7.0.0",
-    "telegraf": "^3.29.0"
+    "osmosis": "^1.1.2",
+    "telegraf": "^3.29.0",
+    "mongoose": "^5.4.19"
   },
   "devDependencies": {
     "@atomix/eslint-config": "^6.4.0",
