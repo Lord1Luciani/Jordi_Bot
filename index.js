@@ -6,6 +6,7 @@ const postingImg = require('./handles/postingImg')
 const menu = require('./handles/menu')
 const verify = require('./handles/verify')
 
+
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const { telegram } = bot
 let postinInt
@@ -27,5 +28,8 @@ bot.action('startPosting', async (ctx) => {
 })
 bot.action('stopPosting', (ctx) => {
   if (verify(ctx, 'Stoped')) clearTimeout(postinInt)
+})
+bot.command('qwer', (ctx) => {
+  postingImg(ctx)
 })
 bot.launch()

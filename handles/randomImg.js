@@ -1,16 +1,18 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 const mongoose = require('mongoose')
+const Posts = require('./dbUpdate')
 
 
 const pnj = /\.pnj/
-let  image = false
+let uniqueImg = false
+let image
 let html = ''
 
 
 module.exports = async () => {
-  image = false
-  while (!image) {
+  uniqueImg = false
+  while (!uniqueImg) {
     await axios.get('http://le-jordi.com/random')
       // eslint-disable-next-line no-loop-func
       .then((response) => {
@@ -21,6 +23,9 @@ module.exports = async () => {
     const $ = cheerio.load(html)
 
     image = $('.photo-post-photo').attr('data-retina')
+
+    uniqueImg = await Posts.verify(image)
+    uniqueImg = uniqueImg
   }
   //   images.each((i, item) => {
   //     data.push({
