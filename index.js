@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const randomImg = require('./handles/randomImg')
 const postingImg = require('./handles/postingImg')
 const menu = require('./handles/menu')
-
+const verify = require('./handles/verify')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const { telegram } = bot
@@ -21,7 +21,11 @@ bot.context.db.on('error', console.error)
 bot.start((ctx) => ctx.reply('Ядерный чемоданчик Аркаши (@jordi_tumblr)', menu().extra()))
 
 bot.action('startPosting', async (ctx) => {
-  postinInt = setInterval(() => postingImg(ctx), 60000)
+  if (verify(ctx, 'Started')) {
+    postinInt = setInterval(() => postingImg(ctx), 60000)
+  }
 })
-bot.action('stopPosting', () => clearTimeout(postinInt))
+bot.action('stopPosting', (ctx) => {
+  if (verify(ctx, 'Stoped')) clearTimeout(postinInt)
+})
 bot.launch()
