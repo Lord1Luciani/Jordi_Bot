@@ -1,10 +1,17 @@
 const randomImg = require('./randomImg')
-let img
+
+
+const gif = /\.gif/
+let url
 
 module.exports = async (ctx) => {
-  img = await randomImg()
-  // console.log(img)
-  ctx.telegram.sendPhoto('@jordi_tumblr', img)
-    .catch((error) => console.log(error))
+  url = await randomImg()
+  if (url.search(gif)) {
+    ctx.telegram.sendDocument('@jordi_tumblr', url)
+  }
+  else {
+    ctx.telegram.sendPhoto('@jordi_tumblr', url)
+      .catch((error) => console.log(error))
+  }
 }
 

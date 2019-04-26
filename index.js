@@ -5,7 +5,7 @@ const randomImg = require('./handles/randomImg')
 const postingImg = require('./handles/postingImg')
 const menu = require('./handles/menu')
 const verify = require('./handles/verify')
-
+let SPEED_RATE = 6000
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const { telegram } = bot
@@ -23,7 +23,7 @@ bot.start((ctx) => ctx.reply('Ядерный чемоданчик Аркаши (
 
 bot.action('startPosting', async (ctx) => {
   if (verify(ctx, 'Started')) {
-    postinInt = setInterval(() => postingImg(ctx), 60000)
+    postinInt = setInterval(() => postingImg(ctx), SPEED_RATE)
   }
 })
 bot.action('stopPosting', (ctx) => {
