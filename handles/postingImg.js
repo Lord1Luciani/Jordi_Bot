@@ -6,7 +6,8 @@ let url
 
 module.exports = async (ctx) => {
   url = await randomImg()
-  if (url.search(gif)) {
+
+  if (url.search(gif) >= 1) {
     ctx.telegram.sendDocument('@jordi_tumblr', url)
   }
   else {
