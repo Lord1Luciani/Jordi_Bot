@@ -22,9 +22,12 @@ bot.context.db.on('error', console.error)
 
 bot.start((ctx) => ctx.reply('Ядерный чемоданчик Аркаши (@jordi_tumblr)', menu().extra()))
 
-bot.action('startPosting', async (ctx) => {
+bot.action('startPosting', (ctx) => {
   if (verify(ctx, 'Started')) {
-    postinInt = setInterval(() => postingImg(ctx), SPEED_RATE)
+    postinInt = setTimeout(function recPost() {
+      postingImg(ctx)
+      postinInt = setTimeout(recPost, SPEED_RATE)
+    }, SPEED_RATE)
   }
 })
 bot.action('stopPosting', (ctx) => {
@@ -34,6 +37,6 @@ bot.command('qwer', (ctx) => {
   postingImg(ctx)
 })
 bot.hears(/^!rate($|\s.*)/, async (ctx) => {
-  SPEED_RATE = await setRatio(ctx)
+  if (verify(ctx, 'Changed speed rate')) SPEED_RATE = await setRatio(ctx)
 })
 bot.launch()
