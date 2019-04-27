@@ -6,6 +6,8 @@ const postingImg = require('./handles/postingImg')
 const menu = require('./handles/menu')
 const verify = require('./handles/verify')
 const setRatio = require('./handles/setRatio')
+
+
 let SPEED_RATE = 6000
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
@@ -37,6 +39,15 @@ bot.command('qwer', (ctx) => {
   postingImg(ctx)
 })
 bot.hears(/^!rate($|\s.*)/, async (ctx) => {
-  if (verify(ctx, 'Changed speed rate')) SPEED_RATE = await setRatio(ctx)
+  if (ctx.chat.id === 686968130) {
+    SPEED_RATE = await setRatio(ctx)
+    ctx.reply(`Rate is ${Math.ceil(SPEED_RATE / 1000)}`)
+      .then((msg) => {
+        setTimeout(() => {
+          telegram.deleteMessage(ctx.chat.id, msg.message_id - 1)
+          telegram.deleteMessage(msg.chat.id, msg.message_id)
+        }, 5000)
+      })
+  }
 })
 bot.launch()
