@@ -25,12 +25,12 @@ module.exports = async () => {
       })
       .catch((error) => console.log(error))
 
+    // eslint-disable-next-line id-match
     const $ = cheerio.load(html)
 
     image = $('.photo-post-photo').attr('data-retina')
 
     uniqueImg = await Posts.verify(image)
-    uniqueImg = uniqueImg
   }
   //   images.each((i, item) => {
   //     data.push({

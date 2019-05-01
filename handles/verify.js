@@ -6,6 +6,10 @@ module.exports = (ctx, action) => {
       ctx.answerCbQuery(action, [true])
       response = true
       break
+    case 613242355:
+      ctx.answerCbQuery(action, [true])
+      response = true
+      break
     case 66478514:
       ctx.answerCbQuery('Люблю тебя, Юрочка', [true])
       break

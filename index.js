@@ -1,14 +1,19 @@
 require('dotenv').config()
 const Telegraf = require('telegraf')
 const mongoose = require('mongoose')
-const randomImg = require('./handles/randomImg')
+const fs = require('fs')
 const postingImg = require('./handles/postingImg')
 const menu = require('./handles/menu')
 const verify = require('./handles/verify')
 const setRatio = require('./handles/setRatio')
 
 
-let SPEED_RATE = 6000
+let SPEED_RATE = 600000
+let config = fs.readFileSync('./config.json')
+
+config = JSON.parse(config)
+
+SPEED_RATE = config.rate
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const { telegram } = bot
@@ -25,6 +30,7 @@ bot.context.db.on('error', console.error)
 bot.start((ctx) => ctx.reply('Ядерный чемоданчик Аркаши (@jordi_tumblr)', menu().extra()))
 
 bot.action('startPosting', (ctx) => {
+  SPEED_RATE = config.rate
   if (verify(ctx, 'Started')) {
     postinInt = setTimeout(function recPost() {
       postingImg(ctx)
@@ -40,7 +46,7 @@ bot.command('qwer', (ctx) => {
 })
 bot.hears(/^!rate($|\s.*)/, async (ctx) => {
   if (ctx.chat.id === 686968130) {
-    SPEED_RATE = await setRatio(ctx)
+    SPEED_RATE = await setRatio(ctx, config)
     ctx.reply(`Rate is ${Math.ceil(SPEED_RATE / 1000)} sec`)
       .then((msg) => {
         setTimeout(() => {
