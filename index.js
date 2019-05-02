@@ -45,15 +45,6 @@ bot.command('qwer', (ctx) => {
   postingImg(ctx)
 })
 bot.hears(/^!rate($|\s.*)/, async (ctx) => {
-  if (ctx.chat.id === 686968130) {
-    SPEED_RATE = await setRatio(ctx, config)
-    ctx.reply(`Rate is ${Math.ceil(SPEED_RATE / 1000)} sec`)
-      .then((msg) => {
-        setTimeout(() => {
-          telegram.deleteMessage(ctx.chat.id, msg.message_id - 1)
-          telegram.deleteMessage(msg.chat.id, msg.message_id)
-        }, 5000)
-      })
-  }
+  SPEED_RATE = await setRatio(ctx, config)
 })
 bot.launch()
